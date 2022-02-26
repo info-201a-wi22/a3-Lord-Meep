@@ -1,30 +1,14 @@
 ---
-title: "index.Rmd"
-author: "NickBen"
+title: "Race analysis of national prison data"
+author: "Benjamin Nickerson"
 date: "2/25/2022"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library("knitr")
+source("../source/analysis.R")
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+As I interrogated this dataset, I found a couple variables interesting. First, I looked at what information was really in the dataset. I found that the states `r state_data$state` lacked data, and that AK also had very sub par data. I made note of that, understanding the image we got from this dataset was not necessarily perfect. I then needed to ask, what state has the most people in prison (as up to date as 2018)? The answer is `r most_jail_pop_2018$state`, but I already knew that I would need to interrogate this number further. California is the most populous state after all, so I needed to ask what state actually has the greatest number of people in prison vs the states population of people in the normal age range for incarceration (i will just refer to this as population). That number would tell us what state incarcerates more people per capita than other states, which happens to be `r highest_jail_pro_2018$state`, Louisiana. Looking at another piece of general analysis I found that around `r amt_black_2018$per_black * 100`% of the US population was black. `r LA_rate_black$per_black * 100`% of Louisiana is black, but amazingly, `r LA_rate_black_incarcerated$per_incarcerated_black * 100`% of their prisons are black. In fact, `r nation_rate_black_incarcerated$per_incarcerated_black * 100`% of the entire US prison population is black, well over double the around 13 percent they make up.
