@@ -10,5 +10,32 @@ library("knitr")
 source("../source/analysis.R")
 ```
 
+The historical nature of policing and prisons in the US is that they have always been tools of oppression. Using the Vera Institutes dataset, I will be investigating links between time, race, incarceration rates and prison populations.  
 
-As I interrogated this dataset, I found a couple variables interesting. First, I looked at what information was really in the dataset. I found that the states `r state_data$state` lacked data, and that AK also had very sub par data. I made note of that, understanding the image we got from this dataset was not necessarily perfect. I then needed to ask, what state has the most people in prison (as up to date as 2018)? The answer is `r most_jail_pop_2018$state`, but I already knew that I would need to interrogate this number further. California is the most populous state after all, so I needed to ask what state actually has the greatest number of people in prison vs the states population of people in the normal age range for incarceration (i will just refer to this as population). That number would tell us what state incarcerates more people per capita than other states, which happens to be `r highest_jail_pro_2018$state`, Louisiana. Looking at another piece of general analysis I found that around `r amt_black_2018$per_black * 100`% of the US population was black. `r LA_rate_black$per_black * 100`% of Louisiana is black, but amazingly, `r LA_rate_black_incarcerated$per_incarcerated_black * 100`% of their prisons are black. In fact, `r nation_rate_black_incarcerated$per_incarcerated_black * 100`% of the entire US prison population is black, well over double the around 13 percent they make up.
+As I interrogated this dataset, I found a couple variables interesting. First, I looked at what information was really in the dataset. I found that the states `r state_data$state` lacked data, and that AK also had very sub par data. I made note of that, understanding the image we got from this dataset was not necessarily perfect. I then needed to ask, what state has the most people in prison (as up to date as 2018)? The answer is `r most_jail_pop_2018$state`, but I already knew that I would need to interrogate this number further. California is the most populous state after all, so I needed to ask what state actually has the greatest number of people in prison vs the states population of people in the normal age range for incarceration (i will just refer to this as population). That number would tell us what state incarcerates more people per capita than other states, which happens to be `r highest_jail_pro_2018$state`, Louisiana. Looking at another piece of general analysis I found that around `r round((amt_black_2018$per_black * 100), 2)`% of the US population was black. `r round((LA_rate_black$per_black * 100), 2)`% of Louisiana is black, but amazingly, `r round((LA_rate_black_incarcerated$per_incarcerated_black * 100), 2)`% of their prisons are black. In fact, `r round((nation_rate_black_incarcerated$per_incarcerated_black * 100), 2)`% of the entire US prison population is black, well over double the around 13 percent they make up.
+<br>
+```{r, echo=FALSE, message=FALSE, results='hide', warning=FALSE}
+long_plot
+long_plot_n
+```
+<br>
+This graph of prison population over time, when paired with the graph of demographic makeup of the US over time shows how disproportionately blacks and latinos are effected by the US prison system. The result of overpolicing and criminalization of black lives has led to between 30 and 45 percent of the prison population being black, despite constantly making up only around 13 percent of the population. 
+<br>
+The story this data tells is quite striking. However, the increasing funding and power of US Police does not just impact minority communities. Incarceration rates are rising across the board, making the necessity of co-liberation all the more obvious.
+<br>
+```{r, echo=FALSE, message=FALSE, results='hide', warning=FALSE}
+white_incarceration_rate_graph
+```
+<br>
+<br>
+When I was prying through this dataset, I found some interesting trends I thought were worth calling attention to, specifically about how cultural density might provide some security to minorities. I found that the smaller the population of black individuals is in a given county, the higher the incareration rate of black individuals is in that county. It seems that a larger minority population provides some protection from the worst of overpolicing, and that the opposite might be true.
+<br>
+```{r, echo=FALSE, message=FALSE, results='hide', warning=FALSE}
+rate_vs_pop
+```
+<br>
+Finally, looking at a map of what places have the highest black incarceration rate we can get an idea of where the problem of overpolicing is most prevelant. I will let readers draw their own conclusions on why the history, and current politics, of these places might lead to more discriminitory incarceration laws.
+<br>
+```{r, echo=FALSE, message=FALSE, results='hide', warning=FALSE}
+Black_Incarceration_Rate_map
+```

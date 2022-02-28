@@ -78,6 +78,8 @@ pop_race_by_year <- incarceration_data %>%
             per_incarcerated_other = nat_other_jail_pop / nat_state_jail_pop) %>% 
   select(year, per_incarcerated_black, per_incarcerated_aapi, per_incarcerated_latinx, 
          per_incarcerated_native, per_incarcerated_white, per_incarcerated_other)
+
+# take the wide analysis and put it into a usable long format
 long_pop <- gather(
   pop_race_by_year,
   key = race,
@@ -85,6 +87,7 @@ long_pop <- gather(
   -year
 )
 
+# plot of prison population makeup over time
 long_plot <- ggplot(long_pop, mapping = aes(x = year, y = percent, group = race, color = race)) +
   geom_line(mapping = aes(x = year, y = percent))+
   scale_x_continuous(limits = c(1985, NA))+
@@ -106,6 +109,8 @@ pop_race_by_year_n <- incarceration_data %>%
             per_native = nat_native_pop / nat_state_pop,
             per_white = nat_white_pop / nat_state_pop) %>% 
   select(year, per_black, per_aapi, per_latinx, per_native, per_white)
+
+# change the analysis of US race makeup over time to a usable long format
 long_pop_n <- gather(
   pop_race_by_year_n,
   key = race,
@@ -113,6 +118,7 @@ long_pop_n <- gather(
   -year
 )
 
+# plot US population demographics over time
 long_plot_n <- ggplot(long_pop_n, mapping = aes(x = year, y = percent, group = race, color = race)) +
   geom_line(mapping = aes(x = year, y = percent))+
   scale_x_continuous(limits = c(1990, NA))+
@@ -120,12 +126,14 @@ long_plot_n <- ggplot(long_pop_n, mapping = aes(x = year, y = percent, group = r
   ggtitle("Percent national population makeup by race")
 
 
-# number of white people in prison vs population by year
+# the proportion of white people in prison vs the total population of whites
+# tells us the rate of incarceration. 
 # this is why coliberation is needed!
 white_incarceration_rate <- incarceration_data %>% 
   group_by(year) %>% 
   summarize(per_nat_white = sum(white_jail_pop, na.rm=T)/ sum(white_pop_15to64, na.rm=T))
 
+# number of white people in prison vs white population by year/incarceration rate
 white_incarceration_rate_graph <- ggplot(white_incarceration_rate, aes(x=year, y=per_nat_white))+
   geom_line()+
   scale_x_continuous(limits = c(1990, NA))+
@@ -147,7 +155,9 @@ rate_vs_pop <- ggplot(black_incarceration, aes(x=black_pop_15to64, y=per_county_
   geom_point()+
   scale_y_continuous(limits = c(0, .2))+
   scale_x_continuous(limits = c(0, 100000))+
-  geom_smooth(color = "red")
+  geom_smooth(color = "red")+
+  labs(x = "Black Population Per County", y = "black incarceration rate")+
+  ggtitle("2018 Black Incarceration rate vs Black Population")
 
 
 ########### making the map
@@ -194,7 +204,6 @@ Black_Incarceration_Rate_map <- ggplot(state_shape) +
     size = .1
   ) +
   coord_map() + 
-  scale_fill_continuous(low = "Black", high = "Red") +
-  labs(fill = "Black Incarceration Rate")+
+  scale_fill_continuous(low = "white", high = "black") +
+  labs(fill = "Black Incarceration Rate by State")+
   map_theme
-
